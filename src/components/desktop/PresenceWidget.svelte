@@ -169,9 +169,9 @@
 	.connection-state.connected { color: #8fa88e; }
 	.connection-state.connected > i { background: #72a477; box-shadow: 0 0 0 0.18rem rgb(114 164 119 / 0.14), 0 0 0.4rem rgb(114 164 119 / 0.55); }
 	.map-panel { display: grid; min-height: clamp(5.1rem, calc(4rem + 1.8vw), 6.5rem); margin-top: 0.65rem; place-items: center; }
-	.world-map { display: block; width: 100%; height: clamp(5.1rem, calc(4rem + 1.8vw), 6.5rem); overflow: visible; }
-	.world-map path { fill: rgb(222 219 209 / 0.13); stroke: rgb(12 12 11 / 0.88); stroke-width: 0.48; vector-effect: non-scaling-stroke; transition: fill 180ms ease, stroke 180ms ease; }
-	.world-map path.active { fill: #72a477; stroke: #a8c4a8; stroke-width: 0.72; filter: drop-shadow(0 0 0.18rem rgb(114 164 119 / 0.9)); }
+	.world-map { display: block; width: 100%; height: clamp(5.1rem, calc(4rem + 1.8vw), 6.5rem); overflow: visible; shape-rendering: geometricPrecision; }
+	.world-map path { fill: rgb(222 219 209 / 0.14); stroke: rgb(222 219 209 / 0.26); stroke-width: 0.46; vector-effect: non-scaling-stroke; transition: fill 180ms ease, stroke 180ms ease; }
+	.world-map path.active { fill: #72a477; stroke: #b8d1b8; stroke-width: 0.78; filter: drop-shadow(0 0 0.2rem rgb(114 164 119 / 0.95)); }
 	.map-loading { display: flex; align-items: center; gap: 0.3rem; }
 	.map-loading i { width: 0.28rem; height: 0.28rem; border-radius: 50%; background: rgb(222 219 209 / 0.22); animation: map-pulse 900ms ease-in-out infinite alternate; }
 	.map-loading i:nth-child(2) { animation-delay: 160ms; }
