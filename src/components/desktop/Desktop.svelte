@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import AppContent from './AppContent.svelte';
 	import Icon from './Icon.svelte';
+	import PresenceWidget from './PresenceWidget.svelte';
 	import Window from './Window.svelte';
 	import type { AppId, GitHubCommit, Profile, Project, WindowState, XPost } from './types';
 
@@ -9,6 +10,7 @@
 	export let projects: Project[];
 	export let latestXPost: XPost;
 	export let latestOrgCommit: GitHubCommit;
+	export let presenceWsUrl: string;
 
 	type XWindow = Window & {
 		requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number;
@@ -309,6 +311,7 @@
 	</button>
 
 	<aside class="side-rail" aria-label="Desktop widgets">
+		<PresenceWidget endpoint={presenceWsUrl} />
 		<section class="widget now-widget">
 			<div class="widget-heading"><span>NOW</span><span class="live-label"><i></i> active</span></div>
 			<p class="widget-kicker">BUILDING</p><h2>Full-stack products at IndieRise.</h2>
