@@ -348,10 +348,18 @@
 		<section class="widget links-widget">
 			<div class="widget-heading"><span>QUICK LINKS</span></div>
 			<div class="quick-links">
-				<a href={profile.github} target="_blank" rel="noreferrer"><Icon name="github" />GitHub <span>↗</span></a>
-				<a href={profile.linkedin} target="_blank" rel="noreferrer"><Icon name="linkedin" />LinkedIn <span>↗</span></a>
-				<a href={`mailto:${profile.email}`}><Icon name="contact" />Email <span>↗</span></a>
-				<button type="button" onclick={() => launch('work')}><Icon name="work" />Projects <span>→</span></button>
+				<a class="quick-link github-link" href={profile.github} target="_blank" rel="noreferrer">
+					<span class="quick-icon"><Icon name="github" /></span><strong>GitHub</strong><small>↗</small>
+				</a>
+				<a class="quick-link linkedin-link" href={profile.linkedin} target="_blank" rel="noreferrer">
+					<span class="quick-icon"><Icon name="linkedin" /></span><strong>LinkedIn</strong><small>↗</small>
+				</a>
+				<a class="quick-link email-link" href={`mailto:${profile.email}`}>
+					<span class="quick-icon"><Icon name="contact" /></span><strong>Email</strong><small>↗</small>
+				</a>
+				<button class="quick-link projects-link" type="button" onclick={() => launch('work')}>
+					<span class="quick-icon"><Icon name="work" /></span><strong>Projects</strong><small>→</small>
+				</button>
 			</div>
 		</section>
 		<section class="widget system-widget">
@@ -465,9 +473,17 @@
 	.activity-copy > span { margin-top: 0.18rem; color: #716d64; font-size: clamp(0.72rem, calc(0.65rem + 0.08vw), 0.8rem); }
 	.activity-copy time { margin-top: 0.3rem; color: #837e74; font-size: clamp(0.66rem, calc(0.6rem + 0.07vw), 0.74rem); letter-spacing: 0.06em; text-transform: uppercase; }
 	.x-feed :global(iframe) { width: 100% !important; min-width: 0 !important; margin: 0 !important; }
-	.quick-links { display: grid; grid-template-columns: 1fr 1fr; gap: 0.48rem; }
-	.quick-links a, .quick-links button { display: grid; grid-template-columns: 1.2rem 1fr auto; align-items: center; gap: 0.38rem; min-width: 0; padding: clamp(0.68rem, calc(0.5rem + 0.25vw), 0.9rem) 0.55rem; border: 1px solid #d0ccc2; border-radius: 0.35rem; background: #f3f1eb; color: #272621; font: 650 clamp(0.8rem, calc(0.7rem + 0.12vw), 0.92rem) var(--font-sans); text-align: left; text-decoration: none; cursor: pointer; }
-	.quick-links :global(svg) { width: clamp(0.95rem, calc(0.8rem + 0.15vw), 1.1rem); height: clamp(0.95rem, calc(0.8rem + 0.15vw), 1.1rem); }
+	.quick-links { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(0.35rem, 0.5vw, 0.55rem); }
+	.quick-link { position: relative; display: grid; justify-items: center; gap: 0.42rem; min-width: 0; padding: 0; border: 0; background: transparent; color: #302f2a; font-family: var(--font-sans); text-decoration: none; cursor: pointer; }
+	.quick-link .quick-icon { display: grid; place-items: center; width: clamp(2.65rem, calc(2.35rem + 0.45vw), 3rem); height: clamp(2.65rem, calc(2.35rem + 0.45vw), 3rem); border: 1px solid rgb(30 29 25 / 0.34); border-radius: clamp(0.58rem, 0.7vw, 0.72rem); box-shadow: inset 0 1px rgb(255 255 255 / 0.45), 0 0.25rem 0.55rem rgb(31 30 26 / 0.2); transition: transform 120ms ease, box-shadow 120ms ease; }
+	.quick-link :global(svg) { width: clamp(1.2rem, calc(1.05rem + 0.22vw), 1.38rem); height: clamp(1.2rem, calc(1.05rem + 0.22vw), 1.38rem); }
+	.quick-link strong { max-width: 100%; overflow: hidden; font-size: clamp(0.68rem, calc(0.61rem + 0.08vw), 0.76rem); font-weight: 600; line-height: 1; text-overflow: ellipsis; white-space: nowrap; }
+	.quick-link small { position: absolute; top: -0.2rem; right: -0.05rem; display: grid; place-items: center; width: 1rem; height: 1rem; border: 1px solid rgb(33 32 28 / 0.22); border-radius: 50%; background: #f2efe8; color: #57544d; font-size: 0.55rem; line-height: 1; box-shadow: 0 0.12rem 0.25rem rgb(0 0 0 / 0.16); }
+	.quick-link:hover .quick-icon, .quick-link:focus-visible .quick-icon { box-shadow: inset 0 1px rgb(255 255 255 / 0.5), 0 0.42rem 0.72rem rgb(31 30 26 / 0.28); transform: translateY(-0.14rem); }
+	.github-link .quick-icon { background: #242421; color: #f0eee8; }
+	.linkedin-link .quick-icon { background: #aabac3; color: #24333b; }
+	.email-link .quick-icon { background: #c7a86d; color: #332b1f; }
+	.projects-link .quick-icon { background: #859188; color: #1f2923; }
 	.system-widget { background: #1b1b18; color: #dedbd1; }
 	.system-widget .widget-heading { color: #8d8b83; }
 	.system-widget dl { display: grid; gap: 0.55rem; margin: 0; font-size: clamp(0.82rem, calc(0.72rem + 0.12vw), 0.95rem); }
