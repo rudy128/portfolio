@@ -168,8 +168,8 @@
 	.connection-state > i { width: 0.38rem; height: 0.38rem; border-radius: 50%; background: #817e77; box-shadow: 0 0 0 0.18rem rgb(129 126 119 / 0.12); }
 	.connection-state.connected { color: #8fa88e; }
 	.connection-state.connected > i { background: #72a477; box-shadow: 0 0 0 0.18rem rgb(114 164 119 / 0.14), 0 0 0.4rem rgb(114 164 119 / 0.55); }
-	.map-panel { display: grid; min-height: clamp(5.1rem, calc(4rem + 1.8vw), 6.5rem); margin-top: 0.8rem; overflow: hidden; place-items: center; border: 1px solid rgb(255 255 255 / 0.075); border-radius: 0.45rem; background: radial-gradient(circle at 72% 42%, rgb(114 164 119 / 0.07), transparent 30%), rgb(0 0 0 / 0.12); }
-	.world-map { display: block; width: calc(100% - 0.65rem); height: clamp(5.1rem, calc(4rem + 1.8vw), 6.5rem); overflow: visible; }
+	.map-panel { display: grid; min-height: clamp(5.1rem, calc(4rem + 1.8vw), 6.5rem); margin-top: 0.65rem; place-items: center; }
+	.world-map { display: block; width: 100%; height: clamp(5.1rem, calc(4rem + 1.8vw), 6.5rem); overflow: visible; }
 	.world-map path { fill: rgb(222 219 209 / 0.13); stroke: rgb(12 12 11 / 0.88); stroke-width: 0.48; vector-effect: non-scaling-stroke; transition: fill 180ms ease, stroke 180ms ease; }
 	.world-map path.active { fill: #72a477; stroke: #a8c4a8; stroke-width: 0.72; filter: drop-shadow(0 0 0.18rem rgb(114 164 119 / 0.9)); }
 	.map-loading { display: flex; align-items: center; gap: 0.3rem; }
