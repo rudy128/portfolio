@@ -1,0 +1,30 @@
+{
+	"$schema": "../node_modules/wrangler/config-schema.json",
+	"name": "pratham-portfolio-presence",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-08-31",
+	"compatibility_flags": ["nodejs_compat"],
+	"vars": {
+		"ALLOWED_ORIGINS": "http://localhost:4321,http://127.0.0.1:4321,https://portfolio-rudy200.vercel.app"
+	},
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "PRESENCE",
+				"class_name": "Presence"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["Presence"]
+		}
+	],
+	"observability": {
+		"enabled": true,
+		"logs": {
+			"head_sampling_rate": 1
+		}
+	}
+}
