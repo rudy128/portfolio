@@ -1,4 +1,6 @@
 ---
+import '@fontsource-variable/ibm-plex-sans/wght.css';
+
 interface Props { title?: string; description?: string; }
 const {
 	title = 'Pratham Kamthan | Full-stack software engineer',
@@ -27,7 +29,7 @@ const {
 </html>
 
 <style is:global>
-	:root { --font-sans: Arial, Helvetica, sans-serif; font-family: var(--font-sans); font-synthesis: none; text-rendering: optimizeLegibility; color-scheme: dark; }
+	:root { --font-sans: 'IBM Plex Sans Variable', 'IBM Plex Sans', sans-serif; font-family: var(--font-sans); font-synthesis: none; text-rendering: optimizeLegibility; color-scheme: dark; }
 	* { box-sizing: border-box; }
 	html, body { margin: 0; min-width: 320px; min-height: 100%; overflow: hidden; }
 	button, input, textarea, select { font: inherit; }
