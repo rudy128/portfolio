@@ -251,7 +251,7 @@
 <main class="desktop" aria-label="Pratham's desktop portfolio" onclick={(event) => {
 	if (!(event.target as HTMLElement).closest('.menu-area')) menuOpen = null;
 }}>
-	<h1 class="sr-only">Pratham Kamthan, full-stack software engineer</h1>
+	<h1 class="sr-only">{profile.name}, {profile.role}</h1>
 
 	<header class="menu-bar">
 		<div class="menu-left">
@@ -313,8 +313,8 @@
 		<PresenceWidget endpoint={presenceWsUrl} />
 		<section class="widget now-widget">
 			<div class="widget-heading"><span>NOW</span><span class="live-label"><i></i> active</span></div>
-			<p class="widget-kicker">BUILDING</p><h2>Full-stack products at IndieRise.</h2>
-			<p>Currently working across product, web systems, and research tooling.</p>
+			<p class="widget-kicker">CURRENT ROLE</p><h2>{profile.jobTitle} at {profile.company}.</h2>
+			<p>I build AI products and the systems that run them.</p>
 		</section>
 		<section class="widget activity-widget" bind:this={activityWidgetElement}>
 			<div class="widget-heading"><span>RECENT ACTIVITY</span></div>

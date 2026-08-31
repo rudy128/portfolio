@@ -11,13 +11,13 @@
 {#if appId === 'home'}
 	<article class="home-app">
 		<section class="profile-pane">
-			<p class="eyebrow">FULL-STACK ENGINEER</p>
+			<p class="eyebrow">AI ENGINEER</p>
 			<div class="identity">
 				<img src="https://avatars.githubusercontent.com/u/77375030?v=4&size=200" width="84" height="84" alt="Pratham Kamthan's GitHub avatar" />
 				<div><h2>{profile.name}</h2><p>@{profile.handle}</p></div>
 			</div>
-			<p class="roles">Product engineer <span>/</span> Systems builder</p>
-			<p class="lede">I build web products end to end. Interfaces, APIs, data pipelines, and the infrastructure that keeps them running.</p>
+			<p class="roles">AI Engineer <span>/</span> Systems Builder</p>
+			<p class="lede">I build products around AI models. My work covers the interfaces, APIs, data flows, and infrastructure they need in production.</p>
 			<div class="actions">
 				<button class="button dark" type="button" onclick={() => onLaunch('work')}>View projects <span>→</span></button>
 				<a class="button" href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn <span>↗</span></a>
@@ -26,17 +26,17 @@
 	</article>
 {:else if appId === 'about'}
 	<article class="page-app about-app">
-		<div class="app-heading"><p class="eyebrow">ABOUT ME</p><h2>I like owning the whole problem.</h2></div>
+		<div class="app-heading"><p class="eyebrow">ABOUT ME</p><h2>I build the product around the model.</h2></div>
 		<div class="about-layout">
 			<div class="about-copy">
-				<p>I am a full-stack engineer based in Chennai and a student at IIT Madras. I am most useful when a project needs someone to follow it from the first interface to the last database query.</p>
-				<p>I work mostly with TypeScript, Go, and Python. Away from product work, I spend time on Linux, 3D modelling, and cybersecurity.</p>
+				<p>I am an AI engineer and {profile.jobTitle} at {profile.company}, based in Chennai. I turn AI models into products people can use.</p>
+				<p>I work mostly with TypeScript, Go, and Python. I build model integrations, interfaces, APIs, and backend systems. Away from work, I spend time on Linux, 3D modelling, and cybersecurity.</p>
 			</div>
 			<dl class="stack-list">
 				<div><dt>Languages</dt><dd>TypeScript, Go, Python, C++</dd></div>
+				<div><dt>AI</dt><dd>Model APIs, retrieval, tool use</dd></div>
 				<div><dt>Web</dt><dd>Next.js, React, Django, Astro</dd></div>
 				<div><dt>Systems</dt><dd>Postgres, Redis, WebSockets, Docker</dd></div>
-				<div><dt>Learning</dt><dd>Realtime software, open source, security</dd></div>
 			</dl>
 		</div>
 	</article>
@@ -63,8 +63,8 @@
 {:else if appId === 'contact'}
 	<article class="page-app contact-app">
 		<div class="contact-copy">
-			<p class="eyebrow">CONTACT</p><h2>Have a real problem to solve?</h2>
-			<p>Send me the context, the constraint, and what success looks like. I read every useful email.</p>
+			<p class="eyebrow">CONTACT</p><h2>Building something with AI?</h2>
+			<p>Send me the context, the constraints, and what the product needs to do. I read every useful email.</p>
 			<a class="email-link" href={`mailto:${profile.email}`}>{profile.email}<span>↗</span></a>
 		</div>
 		<div class="contact-card">
@@ -78,9 +78,9 @@
 	<article class="terminal-app">
 		<p>Last login: today on pratham.dev</p>
 		<p><span>pratham@portfolio</span>:~$ whoami</p>
-		<p>{profile.name}. Full-stack engineer in Chennai.</p>
+		<p>{profile.name}. AI engineer and systems builder in Chennai.</p>
 		<p><span>pratham@portfolio</span>:~$ interests</p>
-		<p>realtime systems · open source · security · 3d</p>
+		<p>applied AI · realtime systems · open source · security</p>
 		<p><span>pratham@portfolio</span>:~$ contact</p>
 		<p><a href={`mailto:${profile.email}`}>{profile.email}</a></p>
 		<p class="prompt"><span>pratham@portfolio</span>:~$ <i></i></p>

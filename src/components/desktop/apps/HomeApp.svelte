@@ -7,7 +7,7 @@
 
 <article class="home-app">
 	<section class="profile-pane">
-		<p class="eyebrow">FULL-STACK ENGINEER</p>
+		<p class="eyebrow">AI ENGINEER</p>
 		<div class="identity">
 			<img
 				src="https://avatars.githubusercontent.com/u/77375030?v=4&size=200"
@@ -19,8 +19,8 @@
 			/>
 			<div><h2>{profile.name}</h2><p>@{profile.handle}</p></div>
 		</div>
-		<p class="roles">Product engineer <span>/</span> Systems builder</p>
-		<p class="lede">I build web products end to end. Interfaces, APIs, data pipelines, and the infrastructure that keeps them running.</p>
+		<p class="roles">AI Engineer <span>/</span> Systems Builder</p>
+		<p class="lede">I build products around AI models. My work covers the interfaces, APIs, data flows, and infrastructure they need in production.</p>
 		<div class="actions">
 			<button class="button dark" type="button" onclick={() => onLaunch('work')}>View projects <span>→</span></button>
 			<a class="button" href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn <span>↗</span></a>
