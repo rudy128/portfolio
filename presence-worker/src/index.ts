@@ -128,10 +128,32 @@ export default {
 } satisfies ExportedHandler<Env>;
 
 export class Presence extends DurableObject<Env> {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		ctx.blockConcurrencyWhile(async () => {
+			this.ctx.storage.sql.exec(`
+				CREATE TABLE IF NOT EXISTS counters (
+					name TEXT PRIMARY KEY,
+					value INTEGER NOT NULL
+				);
+				INSERT OR IGNORE INTO counters (name, value) VALUES ('visitors', 0);
+			`);
+		});
+	}
+
 	async fetch(request: Request): Promise<Response> {
 		if (request.headers.get('Upgrade')?.toLowerCase() !== 'websocket') {
 			return errorResponse('WebSocket upgrade required', 426);
 		}
+
+		const totalVisitors = this.ctx.storage.sql
+			.exec<{ value: number }>(`
+				UPDATE counters
+				SET value = value + 1
+				WHERE name = 'visitors'
+				RETURNING value
+			`)
+			.one().value;
 
 		const [client, server] = Object.values(new WebSocketPair());
 		server.serializeAttachment({
@@ -139,7 +161,7 @@ export class Presence extends DurableObject<Env> {
 			country: cleanLocationPart(request.headers.get(COUNTRY_HEADER), 2).toUpperCase(),
 		} satisfies SocketLocation);
 		this.ctx.acceptWebSocket(server);
-		this.broadcastPresence();
+		this.broadcastPresence(undefined, totalVisitors);
 
 		return new Response(null, { status: 101, webSocket: client });
 	}
@@ -153,12 +175,13 @@ export class Presence extends DurableObject<Env> {
 		this.broadcastPresence(socket);
 	}
 
-	private broadcastPresence(exclude?: WebSocket): void {
+	private broadcastPresence(exclude?: WebSocket, totalVisitors = this.totalVisitors()): void {
 		const sockets = this.ctx.getWebSockets().filter((socket) => (
 			socket !== exclude && socket.readyState === WebSocket.OPEN
 		));
 		const message = JSON.stringify({
 			type: 'presence',
+			totalVisitors,
 			active: sockets.length,
 			locations: aggregateLocations(sockets),
 		});
@@ -174,5 +197,11 @@ export class Presence extends DurableObject<Env> {
 				socket.close(1011, 'Broadcast failed');
 			}
 		}
+	}
+
+	private totalVisitors(): number {
+		return this.ctx.storage.sql
+			.exec<{ value: number }>("SELECT value FROM counters WHERE name = 'visitors'")
+			.one().value;
 	}
 }
