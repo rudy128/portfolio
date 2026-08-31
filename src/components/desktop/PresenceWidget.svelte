@@ -127,7 +127,7 @@
 	{#if activeLocations.length > 0}
 		<div class="map-panel">
 			{#if mapLoadState === 'ready'}
-				<svg class="world-map" viewBox="0 5 360 150" role="img" aria-label={`Active countries: ${activeCountryNames || 'unknown'}`}>
+				<svg class="world-map" viewBox="0 0 360 150" role="img" aria-label={`Active countries: ${activeCountryNames || 'unknown'}`}>
 					{#each mapCountries as country}
 						<path
 							class:active={activeCountryCodes.has(country.code)}
