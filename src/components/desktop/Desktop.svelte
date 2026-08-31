@@ -285,12 +285,12 @@
 		<div class="menu-right">
 			<a href={profile.github} target="_blank" rel="noreferrer">GitHub ↗</a>
 			<span class="status-dot" aria-label="Available"></span><span>IN</span>
-			<button class="brand-mark" type="button" aria-label="Open Home" onclick={() => launch('home')}>PK</button>
+			<button class="brand-mark" type="button" aria-label="Open Home" onclick={() => launch('home')}>
+				<img src="https://avatars.githubusercontent.com/u/77375030?v=4&size=200" width="28" height="28" alt="" />
+			</button>
 			<time>{clock}</time>
 		</div>
 	</header>
-
-	<div class="wallpaper-mark" aria-hidden="true"><span>P</span><span>K</span></div>
 
 	<nav class="desktop-shortcuts" aria-label="Desktop shortcuts">
 		{#each applications.filter((app) => app.id !== 'terminal' && app.id !== 'trash') as app}
@@ -426,7 +426,8 @@
 	.menu-bar { position: fixed; inset: 0 0 auto; z-index: 1000; display: flex; align-items: center; justify-content: space-between; height: clamp(2.5rem, calc(2.25rem + 0.4vw), 3rem); padding: 0 clamp(1rem, calc(0.8rem + 0.3vw), 1.35rem); background: var(--chrome-color); color: #efede6; font-size: clamp(0.82rem, calc(0.72rem + 0.12vw), 0.96rem); box-shadow: 0 1px rgb(255 255 255 / 0.08); }
 	.menu-left, .menu-right, .menu-left nav { display: flex; align-items: center; height: 100%; }
 	.brand-mark, .menu-bar button, .menu-bar a { color: inherit; font: inherit; }
-	.brand-mark { padding: 0; border: 0; background: none; font-weight: 800; letter-spacing: -0.08em; cursor: pointer; }
+	.brand-mark { display: block; width: 1.65rem; height: 1.65rem; padding: 0; overflow: hidden; border: 1px solid rgb(255 255 255 / 0.2); border-radius: 0.38rem; background: #dedbd2; box-shadow: 0 0.15rem 0.35rem rgb(0 0 0 / 0.35); cursor: pointer; }
+	.brand-mark img { display: block; width: 100%; height: 100%; object-fit: cover; }
 	.menu-left > strong { margin: 0 0.85rem 0 0; font-weight: 650; }
 	.menu-left nav > button { height: 100%; padding: 0 0.78rem; border: 0; background: none; cursor: pointer; }
 	.menu-left nav > button:hover, .menu-left nav > button.selected { background: #292924; }
@@ -444,7 +445,6 @@
 	.menu-popover button span { color: #817b70; font-size: 0.58rem; }
 	.menu-popover .danger { margin-top: 0.35rem; border-top: 1px solid #d0cbc2; color: #8b3f38; }
 
-	.wallpaper-mark { position: absolute; left: 49%; top: 49%; display: flex; gap: 0.05em; color: rgb(239 237 230 / 0.04); font-family: var(--font-sans); font-size: min(30vw, 28rem); font-weight: 500; letter-spacing: -0.16em; line-height: 1; transform: translate(-50%, -50%); user-select: none; }
 	.desktop-shortcuts { position: fixed; z-index: 3; bottom: 1.15rem; left: 1.15rem; display: grid; grid-template-columns: auto auto; align-items: end; gap: 0.7rem; }
 	.shortcut { display: grid; justify-items: center; gap: 0.34rem; width: 6.4rem; padding: 0.35rem; border: 1px solid transparent; border-radius: 0.3rem; background: transparent; color: #efede6; font: 500 0.69rem/1.1 var(--font-sans); cursor: pointer; }
 	.shortcut:not(.home-shortcut) { gap: 0.45rem; width: clamp(7rem, calc(6.5rem + 0.8vw), 8.25rem); font-size: clamp(0.8rem, calc(0.72rem + 0.08vw), 0.9rem); }
@@ -516,7 +516,6 @@
 		.menu-left nav, .menu-right a, .menu-right > span:not(.status-dot) { display: none; }
 		.menu-right { gap: 0.5rem; }
 		.desktop::before { inset: 2.7rem 0 0; clip-path: polygon(0 0, 100% 0, 100% 78%, 0 100%); }
-		.wallpaper-mark { top: 28%; font-size: 13rem; }
 		.desktop-shortcuts { top: 3.5rem; right: 0.4rem; bottom: auto; left: 0.4rem; display: flex; justify-content: space-between; gap: 0; }
 		.shortcut, .shortcut:not(.home-shortcut) { width: 24%; font-size: 0.66rem; }
 		.home-shortcut { position: static; transform: none; }
