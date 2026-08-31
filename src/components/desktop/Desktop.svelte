@@ -365,14 +365,6 @@
 				</button>
 			</div>
 		</section>
-		<section class="widget system-widget">
-			<div class="widget-heading"><span>WINDOWS</span><span>{windows.length} OPEN</span></div>
-			<dl>
-				<div><dt>active</dt><dd>{activeTitle}</dd></div>
-				<div><dt>location</dt><dd>{profile.location}</dd></div>
-				<div><dt>focus</dt><dd>realtime systems</dd></div>
-			</dl>
-		</section>
 	</aside>
 
 	<div class="windows-layer" aria-live="polite">
@@ -469,7 +461,7 @@
 	.avatar-tile img { display: block; width: 100%; height: 100%; object-fit: cover; }
 	.sand { background: #c9b889; } .paper { background: #efeee8; } .sage { background: #87938b; } .amber { background: #b5965f; } .terminal { background: #272722; color: #e9e6db; } .trash { background: #d9d7d0; }
 
-	.side-rail { position: fixed; z-index: 4; top: 3.7rem; right: 1.2rem; display: grid; gap: 0.85rem; width: clamp(16rem, 16vw, 19rem); }
+	.side-rail { position: fixed; z-index: 4; top: 3.7rem; right: 1.2rem; display: grid; gap: clamp(0.7rem, 0.7vw, 0.72rem); width: clamp(16rem, 16vw, 19rem); }
 	.widget { padding: clamp(1rem, calc(0.75rem + 0.35vw), 1.35rem); border: 1px solid var(--glass-border); border-radius: 0.72rem; background: var(--glass-light); box-shadow: var(--glass-shadow); -webkit-backdrop-filter: var(--glass-filter); backdrop-filter: var(--glass-filter); }
 	.widget-heading { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 0.9rem; color: #625f58; font-size: clamp(0.78rem, calc(0.65rem + 0.18vw), 0.92rem); font-weight: 800; letter-spacing: 0.08em; }
 	.live-label { display: flex; align-items: center; gap: 0.35rem; color: #5d785d; letter-spacing: 0; text-transform: lowercase; }
@@ -501,13 +493,6 @@
 	.linkedin-link .quick-icon { background: #aabac3; color: #24333b; }
 	.email-link .quick-icon { background: #c7a86d; color: #332b1f; }
 	.projects-link .quick-icon { background: #859188; color: #1f2923; }
-	.system-widget { border-color: rgb(255 255 255 / 0.16); background: var(--glass-dark); color: #dedbd1; }
-	.system-widget .widget-heading { color: #aaa79e; }
-	.system-widget dl { display: grid; gap: 0.55rem; margin: 0; font-size: clamp(0.82rem, calc(0.72rem + 0.12vw), 0.95rem); }
-	.system-widget dl div { display: flex; justify-content: space-between; gap: 1rem; }
-	.system-widget dt { color: #97958d; }
-	.system-widget dd { margin: 0; color: #d2cfc5; }
-
 	.windows-layer { position: absolute; inset: 0; pointer-events: none; }
 	.windows-layer :global(.app-window) { pointer-events: auto; }
 	.dock { position: fixed; z-index: 1050; left: 50%; bottom: 1.15rem; display: flex; align-items: end; gap: 0.42rem; padding: 0.45rem; border: 1px solid rgb(255 255 255 / 0.11); border-radius: 0.85rem; background: rgb(22 22 19 / 0.95); box-shadow: 0 0.65rem 1.8rem rgb(0 0 0 / 0.4); transform: translateX(-50%); }
@@ -523,7 +508,7 @@
 
 	@media (max-width: 1100px) { .side-rail { display: none; } }
 	@media (min-width: 1101px) and (max-height: 920px) {
-		.side-rail { bottom: 5.5rem; max-height: calc(100svh - 9rem); padding-right: 0.2rem; overflow-y: auto; scrollbar-width: none; }
+		.side-rail { bottom: 1.15rem; max-height: calc(100svh - 4.85rem); padding-right: 0.2rem; overflow-y: auto; scrollbar-width: none; }
 		.side-rail::-webkit-scrollbar { display: none; }
 	}
 	@media (max-width: 760px) {
