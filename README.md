@@ -21,7 +21,7 @@ The profile image uses Pratham's current public GitHub avatar.
 
 ## Active connections
 
-The security-system widget displays the number and approximate locations of open portfolio WebSocket connections. Cloudflare supplies city and country during the connection handshake. The Durable Object keeps that metadata on each live socket, but does not store visitor history, IP addresses, or identity.
+The security-system widget displays the number and approximate locations of open portfolio WebSocket connections, with active countries highlighted on its map. Cloudflare supplies city and country during the connection handshake. The Durable Object keeps that metadata on each live socket, but does not store visitor history, IP addresses, or identity.
 
 Local development needs no environment file. Run `pnpm dev` and `pnpm presence:dev` in separate terminals, and the site will connect to `ws://localhost:8787/presence` automatically.
 
