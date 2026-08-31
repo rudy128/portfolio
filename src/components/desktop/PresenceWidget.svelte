@@ -6,9 +6,10 @@
 
 	type ConnectionState = 'unconfigured' | 'connecting' | 'connected' | 'reconnecting';
 	type PresenceLocation = { city: string; country: string; active: number };
-	type PresenceMessage = { type: 'presence'; active: number; locations: PresenceLocation[] };
+	type PresenceMessage = { type: 'presence'; totalVisitors: number; active: number; locations: PresenceLocation[] };
 	type MapLoadState = 'idle' | 'loading' | 'ready' | 'error';
 
+	let totalVisitors: number | null = null;
 	let activeConnections: number | null = null;
 	let activeLocations: PresenceLocation[] = [];
 	let connectionState: ConnectionState = endpoint ? 'connecting' : 'unconfigured';
@@ -42,9 +43,13 @@
 		if (!value || typeof value !== 'object') return false;
 		const message = value as Record<string, unknown>;
 		return message.type === 'presence'
+			&& typeof message.totalVisitors === 'number'
+			&& Number.isInteger(message.totalVisitors)
+			&& message.totalVisitors >= 0
 			&& typeof message.active === 'number'
 			&& Number.isInteger(message.active)
 			&& message.active >= 0
+			&& message.totalVisitors >= message.active
 			&& Array.isArray(message.locations)
 			&& message.locations.every(isPresenceLocation);
 	}
@@ -74,6 +79,7 @@
 				try {
 					const message: unknown = JSON.parse(String(event.data));
 					if (isPresenceMessage(message)) {
+						totalVisitors = message.totalVisitors;
 						activeConnections = message.active;
 						activeLocations = message.locations;
 						if (message.locations.some((location) => location.country)) void loadWorldMap();
@@ -137,9 +143,13 @@
 			{/if}
 		</div>
 	{/if}
-	<div class="connection-count" aria-live="polite">
-		<span>Total visitors</span>
-		<div>
+	<div class="visitor-metrics" aria-live="polite">
+		<div class="visitor-metric">
+			<strong>{totalVisitors ?? '—'}</strong>
+			<small>{totalVisitors === 1 ? 'total visitor' : 'total visitors'}</small>
+		</div>
+		<i class="metric-divider" aria-hidden="true"></i>
+		<div class="visitor-metric">
 			<strong>{activeConnections ?? '—'}</strong>
 			<small>{activeConnections === 1 ? 'active visitor' : 'active visitors'}</small>
 		</div>
@@ -148,7 +158,7 @@
 
 <style>
 	.presence-widget { padding: clamp(1rem, calc(0.75rem + 0.35vw), 1.35rem); border: 1px solid rgb(255 255 255 / 0.16); border-radius: 0.72rem; background: var(--glass-dark, rgb(20 20 18 / 0.75)); box-shadow: var(--glass-shadow, 0 0.8rem 2rem rgb(0 0 0 / 0.34)); color: #dedbd1; -webkit-backdrop-filter: var(--glass-filter, blur(22px) saturate(135%)); backdrop-filter: var(--glass-filter, blur(22px) saturate(135%)); }
-	header, .presence-title, .connection-state, .connection-count > div { display: flex; align-items: center; }
+	header, .presence-title, .connection-state, .visitor-metrics, .visitor-metric { display: flex; align-items: center; }
 	header { justify-content: space-between; gap: 0.8rem; }
 	.presence-title { gap: 0.48rem; min-width: 0; }
 	.presence-title > i { position: relative; width: 0.82rem; height: 0.82rem; flex: none; border: 1px solid #7892a3; border-left-color: transparent; border-radius: 50%; transform: rotate(-32deg); }
@@ -167,11 +177,11 @@
 	.map-loading i:nth-child(2) { animation-delay: 160ms; }
 	.map-loading i:nth-child(3) { animation-delay: 320ms; }
 	.map-error { color: #77746d; font-size: 0.66rem; }
-	.connection-count { margin-top: 0.75rem; }
-	.connection-count > span { display: block; color: #77746d; font-size: clamp(0.6rem, calc(0.54rem + 0.07vw), 0.68rem); font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; }
-	.connection-count > div { gap: 0.6rem; margin-top: 0.2rem; }
-	.connection-count strong { font-size: clamp(2.75rem, calc(2rem + 1.2vw), 3.8rem); font-weight: 450; line-height: 0.9; letter-spacing: -0.07em; }
-	.connection-count small { align-self: end; padding-bottom: 0.28rem; color: #aaa79e; font-size: clamp(0.72rem, calc(0.65rem + 0.08vw), 0.82rem); }
+	.visitor-metrics { gap: clamp(0.45rem, 0.7vw, 0.7rem); margin-top: 0.75rem; white-space: nowrap; }
+	.visitor-metric { min-width: 0; gap: 0.38rem; }
+	.visitor-metric strong { font-size: clamp(2.1rem, calc(1.7rem + 0.6vw), 2.7rem); font-weight: 450; line-height: 0.9; letter-spacing: -0.07em; }
+	.visitor-metric small { color: #aaa79e; font-size: clamp(0.58rem, calc(0.53rem + 0.05vw), 0.65rem); line-height: 1.1; }
+	.metric-divider { width: 1px; height: 2.15rem; flex: none; background: rgb(255 255 255 / 0.16); }
 	@keyframes map-pulse { to { opacity: 0.32; transform: translateY(-0.08rem); } }
 	@media (prefers-reduced-motion: reduce) { .map-loading i { animation: none; } .world-map path { transition: none; } }
 </style>
