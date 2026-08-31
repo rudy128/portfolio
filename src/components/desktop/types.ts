@@ -28,6 +28,18 @@ export interface GitHubCommit {
 	organizationAvatar: string;
 }
 
+export interface GitHubContributionDay {
+	date: string;
+	count: number;
+	level: number;
+	label: string;
+}
+
+export interface GitHubContributions {
+	total: number;
+	days: GitHubContributionDay[];
+}
+
 export interface Project {
 	number: string;
 	title: string;

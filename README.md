@@ -7,6 +7,7 @@ A fast Astro portfolio with a hydrated Svelte desktop. It manages independent ap
 Contact details and project entries live in `src/data/portfolio.ts`. The window manager lives in `src/components/desktop/Desktop.svelte`, while each window shell lives in `src/components/desktop/Window.svelte`.
 
 The profile image uses Pratham's current public GitHub avatar.
+The contribution widget reads Pratham's public GitHub calendar during the Astro build. It does not need a GitHub token or make a request from the visitor's browser.
 
 ## Commands
 
