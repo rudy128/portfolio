@@ -99,7 +99,7 @@
 		min-width: 27.5rem;
 		min-height: 18.75rem;
 		overflow: hidden;
-		border: 1px solid var(--glass-border, rgb(255 255 255 / 0.38));
+		border: 1px solid var(--chrome-color, #0d0d0b);
 		border-radius: 0.72rem;
 		background: var(--glass-light, rgb(235 232 224 / 0.78));
 		box-shadow: var(--glass-shadow, 0 1rem 2.8rem rgb(0 0 0 / 0.42));

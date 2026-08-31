@@ -412,6 +412,7 @@
 
 <style>
 	.desktop {
+		--chrome-color: #0d0d0b;
 		--glass-light: linear-gradient(145deg, rgb(248 246 240 / 0.82), rgb(222 218 208 / 0.7));
 		--glass-light-strong: rgb(235 232 224 / 0.72);
 		--glass-dark: linear-gradient(145deg, rgb(38 38 34 / 0.78), rgb(14 14 12 / 0.68));
@@ -428,7 +429,7 @@
 	.desktop::before { position: absolute; inset: 3.2rem 16.5rem 5.8rem 8.5rem; border: 1px solid rgb(255 255 255 / 0.05); background: rgb(0 0 0 / 0.1); clip-path: polygon(8% 0, 100% 0, 88% 100%, 0 82%); content: ''; }
 	.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
 
-	.menu-bar { position: fixed; inset: 0 0 auto; z-index: 1000; display: flex; align-items: center; justify-content: space-between; height: clamp(2.5rem, calc(2.25rem + 0.4vw), 3rem); padding: 0 clamp(1rem, calc(0.8rem + 0.3vw), 1.35rem); background: #0d0d0b; color: #efede6; font-size: clamp(0.82rem, calc(0.72rem + 0.12vw), 0.96rem); box-shadow: 0 1px rgb(255 255 255 / 0.08); }
+	.menu-bar { position: fixed; inset: 0 0 auto; z-index: 1000; display: flex; align-items: center; justify-content: space-between; height: clamp(2.5rem, calc(2.25rem + 0.4vw), 3rem); padding: 0 clamp(1rem, calc(0.8rem + 0.3vw), 1.35rem); background: var(--chrome-color); color: #efede6; font-size: clamp(0.82rem, calc(0.72rem + 0.12vw), 0.96rem); box-shadow: 0 1px rgb(255 255 255 / 0.08); }
 	.menu-left, .menu-right, .menu-left nav { display: flex; align-items: center; height: 100%; }
 	.brand-mark, .menu-bar button, .menu-bar a { color: inherit; font: inherit; }
 	.brand-mark { padding: 0; border: 0; background: none; font-weight: 800; letter-spacing: -0.08em; cursor: pointer; }
