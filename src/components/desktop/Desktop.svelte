@@ -426,7 +426,7 @@
 	.menu-bar { position: fixed; inset: 0 0 auto; z-index: 1000; display: flex; align-items: center; justify-content: space-between; height: clamp(2.5rem, calc(2.25rem + 0.4vw), 3rem); padding: 0 clamp(1rem, calc(0.8rem + 0.3vw), 1.35rem); background: var(--chrome-color); color: #efede6; font-size: clamp(0.82rem, calc(0.72rem + 0.12vw), 0.96rem); box-shadow: 0 1px rgb(255 255 255 / 0.08); }
 	.menu-left, .menu-right, .menu-left nav { display: flex; align-items: center; height: 100%; }
 	.brand-mark, .menu-bar button, .menu-bar a { color: inherit; font: inherit; }
-	.brand-mark { display: block; width: 1.65rem; height: 1.65rem; padding: 0; overflow: hidden; border: 1px solid rgb(255 255 255 / 0.2); border-radius: 0.38rem; background: #dedbd2; box-shadow: 0 0.15rem 0.35rem rgb(0 0 0 / 0.35); cursor: pointer; }
+	.brand-mark { display: block; width: 1.65rem; height: 1.65rem; padding: 0; overflow: hidden; border: 0; border-radius: 50%; background: transparent; box-shadow: 0 0.15rem 0.35rem rgb(0 0 0 / 0.35); cursor: pointer; }
 	.brand-mark img { display: block; width: 100%; height: 100%; object-fit: cover; }
 	.menu-left > strong { margin: 0 0.85rem 0 0; font-weight: 650; }
 	.menu-left nav > button { height: 100%; padding: 0 0.78rem; border: 0; background: none; cursor: pointer; }
