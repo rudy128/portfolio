@@ -106,11 +106,6 @@
 		: connectionState === 'unconfigured'
 			? 'not configured'
 			: connectionState;
-	$: statusCopy = connectionState === 'unconfigured'
-		? 'Add the public WebSocket URL to enable presence.'
-		: connectionState === 'connected'
-			? 'Approximate locations. Nothing stored.'
-			: 'Opening WebSocket link.';
 	$: activeCountryCodes = new Set(activeLocations.map((location) => location.country));
 	$: activeCountryNames = mapCountries
 		.filter((country) => activeCountryCodes.has(country.code))
@@ -120,7 +115,7 @@
 
 <section class="presence-widget" aria-labelledby="presence-title">
 	<header>
-		<span class="presence-title"><i aria-hidden="true"></i><strong id="presence-title">Security system</strong></span>
+		<span class="presence-title"><i aria-hidden="true"></i><strong id="presence-title">Visitor locations</strong></span>
 		<span class:connected={connectionState === 'connected'} class="connection-state"><i></i>{stateLabel}</span>
 	</header>
 	{#if activeLocations.length > 0}
@@ -141,27 +136,19 @@
 				<div class="map-loading" aria-label="Loading active country map"><i></i><i></i><i></i></div>
 			{/if}
 		</div>
-		<ul class="location-list" aria-label="Active connection locations">
-			{#each activeLocations as location (`${location.city}:${location.country}`)}
-				<li title={[location.city, location.country].filter(Boolean).join(', ') || 'Unknown location'}>
-					<i aria-hidden="true"></i>
-					<span>{location.city || location.country || 'Unknown'}</span>
-					{#if location.country && location.city}<small>{location.country}</small>{/if}
-					{#if location.active > 1}<small>×{location.active}</small>{/if}
-				</li>
-			{/each}
-		</ul>
 	{/if}
 	<div class="connection-count" aria-live="polite">
-		<strong>{activeConnections ?? '—'}</strong>
-		<span>active now</span>
+		<span>Total visitors</span>
+		<div>
+			<strong>{activeConnections ?? '—'}</strong>
+			<small>{activeConnections === 1 ? 'active visitor' : 'active visitors'}</small>
+		</div>
 	</div>
-	<p>{statusCopy}</p>
 </section>
 
 <style>
 	.presence-widget { padding: clamp(1rem, calc(0.75rem + 0.35vw), 1.35rem); border: 1px solid rgb(255 255 255 / 0.16); border-radius: 0.72rem; background: var(--glass-dark, rgb(20 20 18 / 0.75)); box-shadow: var(--glass-shadow, 0 0.8rem 2rem rgb(0 0 0 / 0.34)); color: #dedbd1; -webkit-backdrop-filter: var(--glass-filter, blur(22px) saturate(135%)); backdrop-filter: var(--glass-filter, blur(22px) saturate(135%)); }
-	header, .presence-title, .connection-state, .connection-count, .location-list, .location-list li { display: flex; align-items: center; }
+	header, .presence-title, .connection-state, .connection-count > div { display: flex; align-items: center; }
 	header { justify-content: space-between; gap: 0.8rem; }
 	.presence-title { gap: 0.48rem; min-width: 0; }
 	.presence-title > i { position: relative; width: 0.82rem; height: 0.82rem; flex: none; border: 1px solid #7892a3; border-left-color: transparent; border-radius: 50%; transform: rotate(-32deg); }
@@ -180,15 +167,11 @@
 	.map-loading i:nth-child(2) { animation-delay: 160ms; }
 	.map-loading i:nth-child(3) { animation-delay: 320ms; }
 	.map-error { color: #77746d; font-size: 0.66rem; }
-	.location-list { flex-wrap: wrap; gap: 0.38rem; margin: 0.65rem 0 0; padding: 0; list-style: none; }
-	.location-list li { gap: 0.28rem; min-width: 0; padding: 0.24rem 0.46rem; border: 1px solid rgb(255 255 255 / 0.09); border-radius: 999px; background: rgb(255 255 255 / 0.055); color: #bcb8ae; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: clamp(0.58rem, calc(0.53rem + 0.06vw), 0.65rem); line-height: 1; }
-	.location-list li > i { width: 0.32rem; height: 0.32rem; flex: none; border-radius: 50%; background: #72a477; box-shadow: 0 0 0.35rem rgb(114 164 119 / 0.6); }
-	.location-list li > span { overflow: hidden; max-width: 7.5rem; text-overflow: ellipsis; white-space: nowrap; }
-	.location-list small { color: #77746d; font: inherit; }
-	.connection-count { gap: 0.55rem; margin-top: 0.9rem; }
-	.connection-count strong { font-size: clamp(2rem, calc(1.55rem + 0.7vw), 2.6rem); font-weight: 450; line-height: 0.9; letter-spacing: -0.06em; }
-	.connection-count span { align-self: end; color: #aaa79e; font-size: clamp(0.75rem, calc(0.67rem + 0.09vw), 0.84rem); }
-	p { margin: 1rem 0 0; padding-top: 0.72rem; border-top: 1px solid rgb(255 255 255 / 0.13); color: #8f8c84; font-size: clamp(0.66rem, calc(0.6rem + 0.07vw), 0.74rem); }
+	.connection-count { margin-top: 0.75rem; }
+	.connection-count > span { display: block; color: #77746d; font-size: clamp(0.6rem, calc(0.54rem + 0.07vw), 0.68rem); font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; }
+	.connection-count > div { gap: 0.6rem; margin-top: 0.2rem; }
+	.connection-count strong { font-size: clamp(2.75rem, calc(2rem + 1.2vw), 3.8rem); font-weight: 450; line-height: 0.9; letter-spacing: -0.07em; }
+	.connection-count small { align-self: end; padding-bottom: 0.28rem; color: #aaa79e; font-size: clamp(0.72rem, calc(0.65rem + 0.08vw), 0.82rem); }
 	@keyframes map-pulse { to { opacity: 0.32; transform: translateY(-0.08rem); } }
 	@media (prefers-reduced-motion: reduce) { .map-loading i { animation: none; } .world-map path { transition: none; } }
 </style>
