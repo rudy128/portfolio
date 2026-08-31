@@ -303,12 +303,11 @@
 				<span>{app.label}</span>
 			</button>
 		{/each}
+		<button class="shortcut trash-shortcut" type="button" onclick={() => launch('trash')}>
+			<span class="icon-tile trash"><Icon name="trash" /></span>
+			<span>Trash</span>
+		</button>
 	</nav>
-
-	<button class="shortcut trash-shortcut" type="button" onclick={() => launch('trash')}>
-		<span class="icon-tile trash"><Icon name="trash" /></span>
-		<span>Trash</span>
-	</button>
 
 	<aside class="side-rail" aria-label="Desktop widgets">
 		<PresenceWidget endpoint={presenceWsUrl} />
@@ -446,14 +445,15 @@
 	.menu-popover .danger { margin-top: 0.35rem; border-top: 1px solid #d0cbc2; color: #8b3f38; }
 
 	.wallpaper-mark { position: absolute; left: 49%; top: 49%; display: flex; gap: 0.05em; color: rgb(239 237 230 / 0.04); font-family: var(--font-sans); font-size: min(30vw, 28rem); font-weight: 500; letter-spacing: -0.16em; line-height: 1; transform: translate(-50%, -50%); user-select: none; }
-	.desktop-shortcuts { position: fixed; z-index: 3; bottom: 1.15rem; left: 1.15rem; display: grid; align-items: end; gap: 0.7rem; }
+	.desktop-shortcuts { position: fixed; z-index: 3; bottom: 1.15rem; left: 1.15rem; display: grid; grid-template-columns: auto auto; align-items: end; gap: 0.7rem; }
 	.shortcut { display: grid; justify-items: center; gap: 0.34rem; width: 6.4rem; padding: 0.35rem; border: 1px solid transparent; border-radius: 0.3rem; background: transparent; color: #efede6; font: 500 0.69rem/1.1 var(--font-sans); cursor: pointer; }
 	.shortcut:not(.home-shortcut) { gap: 0.45rem; width: clamp(7rem, calc(6.5rem + 0.8vw), 8.25rem); font-size: clamp(0.8rem, calc(0.72rem + 0.08vw), 0.9rem); }
+	.desktop-shortcuts > .shortcut:not(.home-shortcut):not(.trash-shortcut) { grid-column: 1; }
 	.shortcut:not(.home-shortcut) .icon-tile { width: clamp(3.75rem, calc(3.4rem + 0.7vw), 4.5rem); height: clamp(3.75rem, calc(3.4rem + 0.7vw), 4.5rem); border-radius: clamp(0.7rem, 0.8vw, 0.9rem); }
 	.shortcut:not(.home-shortcut) .icon-tile :global(svg) { width: clamp(1.8rem, calc(1.55rem + 0.4vw), 2.15rem); height: clamp(1.8rem, calc(1.55rem + 0.4vw), 2.15rem); }
 	.home-shortcut { position: fixed; top: 50%; left: 48.5%; transform: translate(-50%, -50%); }
 	.home-shortcut .avatar-tile { width: clamp(4.25rem, calc(3.25rem + 1.8vw), 6rem); height: clamp(4.25rem, calc(3.25rem + 1.8vw), 6rem); border-radius: clamp(0.75rem, 1vw, 1.1rem); }
-	.trash-shortcut { position: fixed; z-index: 3; right: 1.15rem; bottom: 1.15rem; }
+	.trash-shortcut { grid-row: 3; grid-column: 2; }
 	.shortcut:hover, .shortcut:focus-visible { border-color: rgb(255 255 255 / 0.16); background: rgb(255 255 255 / 0.05); }
 	.icon-tile { display: grid; place-items: center; width: 3.25rem; height: 3.25rem; border: 1px solid rgb(0 0 0 / 0.35); border-radius: 0.62rem; color: #23231f; box-shadow: inset 0 1px rgb(255 255 255 / 0.55), 0 0.3rem 0.62rem rgb(0 0 0 / 0.22); }
 	.icon-tile :global(svg) { width: 1.58rem; height: 1.58rem; }
@@ -524,7 +524,7 @@
 		.shortcut .icon-tile :global(svg) { width: 1.2rem; height: 1.2rem; }
 		.shortcut:not(.home-shortcut) .icon-tile { width: 2.9rem; height: 2.9rem; border-radius: 0.56rem; }
 		.shortcut:not(.home-shortcut) .icon-tile :global(svg) { width: 1.35rem; height: 1.35rem; }
-		.trash-shortcut { right: 0.4rem; bottom: 4.5rem; width: 24%; }
+		.trash-shortcut { position: fixed; right: 0.4rem; bottom: 4.5rem; width: 24%; }
 		.dock { bottom: 0.5rem; gap: 0.32rem; padding: 0.36rem; }
 		.dock-item .icon-tile { width: 2.62rem; height: 2.62rem; border-radius: 0.52rem; }
 		.dock-item .icon-tile :global(svg) { width: 1.15rem; height: 1.15rem; }
