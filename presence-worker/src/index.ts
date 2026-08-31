@@ -2,8 +2,31 @@ import { DurableObject } from 'cloudflare:workers';
 
 const PRESENCE_PATH = '/presence';
 
-function allowedOrigins(value: string): Set<string> {
-	return new Set(value.split(',').map((origin) => origin.trim()).filter(Boolean));
+function matchesOriginPattern(origin: string, pattern: string): boolean {
+	const segments = pattern.split('*');
+	if (segments.length === 1) return origin === pattern;
+	if (segments.length !== 2) return false;
+
+	const [prefix, suffix] = segments;
+	const wildcard = origin.slice(prefix.length, origin.length - suffix.length);
+	return origin.startsWith(prefix)
+		&& origin.endsWith(suffix)
+		&& /^[a-z0-9-]+$/i.test(wildcard);
+}
+
+function isAllowedOrigin(value: string, configuredOrigins: string): boolean {
+	let origin: string;
+	try {
+		origin = new URL(value).origin;
+	} catch {
+		return false;
+	}
+
+	return configuredOrigins
+		.split(',')
+		.map((pattern) => pattern.trim())
+		.filter(Boolean)
+		.some((pattern) => matchesOriginPattern(origin, pattern));
 }
 
 function errorResponse(message: string, status: number): Response {
@@ -27,7 +50,7 @@ export default {
 		}
 
 		const origin = request.headers.get('Origin');
-		if (!origin || !allowedOrigins(env.ALLOWED_ORIGINS).has(origin)) {
+		if (!origin || !isAllowedOrigin(origin, env.ALLOWED_ORIGINS)) {
 			return errorResponse('Origin not allowed', 403);
 		}
 

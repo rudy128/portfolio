@@ -31,6 +31,6 @@ For production:
 2. Copy `.env.example` to `.env` and replace the placeholder with the deployed Worker URL.
 3. Add the same `PUBLIC_PRESENCE_WS_URL` value to the portfolio host's production environment variables before rebuilding the site.
 
-`PUBLIC_PRESENCE_WS_URL` is a public endpoint, not a secret. If the portfolio domain changes, add its exact origin to `ALLOWED_ORIGINS` in `presence-worker/wrangler.jsonc` before deploying the Worker.
+`PUBLIC_PRESENCE_WS_URL` is a public endpoint, not a secret. The Worker accepts the production alias and this project's generated Vercel deployment URLs. If the project name, Vercel scope, or production domain changes, update `ALLOWED_ORIGINS` in `presence-worker/wrangler.jsonc` before deploying the Worker.
 
 Astro documentation: https://docs.astro.build
