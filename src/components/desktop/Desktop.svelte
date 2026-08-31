@@ -359,9 +359,9 @@
 				<a class="quick-link email-link" href={`mailto:${profile.email}`}>
 					<span class="quick-icon"><Icon name="contact" /></span><strong>Email</strong><small>↗</small>
 				</a>
-				<button class="quick-link projects-link" type="button" onclick={() => launch('work')}>
-					<span class="quick-icon"><Icon name="work" /></span><strong>Projects</strong><small>→</small>
-				</button>
+				<a class="quick-link x-link" href={profile.x} target="_blank" rel="noreferrer" aria-label={`X profile @${profile.xHandle}`}>
+					<span class="quick-icon"><Icon name="x" /></span><strong>Twitter/X</strong><small>↗</small>
+				</a>
 			</div>
 		</section>
 	</aside>
@@ -492,7 +492,7 @@
 	.github-link .quick-icon { background: #242421; color: #f0eee8; }
 	.linkedin-link .quick-icon { background: #aabac3; color: #24333b; }
 	.email-link .quick-icon { background: #c7a86d; color: #332b1f; }
-	.projects-link .quick-icon { background: #859188; color: #1f2923; }
+	.x-link .quick-icon { background: #111; color: #fff; }
 	.windows-layer { position: absolute; inset: 0; pointer-events: none; }
 	.windows-layer :global(.app-window) { pointer-events: auto; }
 	.dock { position: fixed; z-index: 1050; left: 50%; bottom: 1.15rem; display: flex; align-items: end; gap: 0.42rem; padding: 0.45rem; border: 1px solid rgb(255 255 255 / 0.11); border-radius: 0.85rem; background: rgb(22 22 19 / 0.95); box-shadow: 0 0.65rem 1.8rem rgb(0 0 0 / 0.4); transform: translateX(-50%); }
