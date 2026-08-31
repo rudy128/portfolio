@@ -1,15 +1,17 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import AppContent from './AppContent.svelte';
+	import GitHubWidget from './GitHubWidget.svelte';
 	import Icon from './Icon.svelte';
 	import PresenceWidget from './PresenceWidget.svelte';
 	import Window from './Window.svelte';
-	import type { AppId, GitHubCommit, Profile, Project, WindowState, XPost } from './types';
+	import type { AppId, GitHubCommit, GitHubContributions, Profile, Project, WindowState, XPost } from './types';
 
 	export let profile: Profile;
 	export let projects: Project[];
 	export let latestXPost: XPost;
 	export let latestOrgCommit: GitHubCommit;
+	export let githubContributions: GitHubContributions;
 	export let presenceWsUrl: string;
 
 	type XWindow = Window & {
@@ -316,6 +318,9 @@
 			<p class="widget-kicker">CURRENT ROLE</p><h2>{profile.jobTitle} at {profile.company}.</h2>
 			<p>I build AI products and the systems that run them.</p>
 		</section>
+		<section class="widget github-widget" aria-label="GitHub contribution graph">
+			<GitHubWidget username={profile.handle} profileUrl={profile.github} contributions={githubContributions} />
+		</section>
 		<section class="widget activity-widget" bind:this={activityWidgetElement}>
 			<div class="widget-heading"><span>RECENT ACTIVITY</span></div>
 			<div class="activity-list">
@@ -507,6 +512,9 @@
 	.dock-item.active::after { opacity: 1; }
 
 	@media (max-width: 1100px) { .side-rail { display: none; } }
+	@media (min-width: 1700px) {
+		.github-widget { position: fixed; right: calc(1.92rem + clamp(16rem, 16vw, 19rem)); bottom: 1.15rem; width: clamp(19rem, 20vw, 23rem); }
+	}
 	@media (min-width: 1101px) and (max-height: 920px) {
 		.side-rail { bottom: 1.15rem; max-height: calc(100svh - 4.85rem); padding-right: 0.2rem; overflow-y: auto; scrollbar-width: none; }
 		.side-rail::-webkit-scrollbar { display: none; }

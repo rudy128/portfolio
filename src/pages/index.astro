@@ -2,11 +2,13 @@
 import Desktop from '../components/desktop/Desktop.svelte';
 import Layout from '../layouts/Layout.astro';
 import { latestOrgCommit, latestXPost, profile, projects } from '../data/portfolio';
+import { getGitHubContributions } from '../lib/githubContributions';
 
 const presenceWsUrl = import.meta.env.PUBLIC_PRESENCE_WS_URL
 	?? (import.meta.env.DEV ? 'ws://localhost:8787/presence' : '');
+const githubContributions = await getGitHubContributions(profile.handle);
 ---
 
 <Layout>
-	<Desktop client:load {profile} {projects} {latestXPost} {latestOrgCommit} {presenceWsUrl} />
+	<Desktop client:load {profile} {projects} {latestXPost} {latestOrgCommit} {githubContributions} {presenceWsUrl} />
 </Layout>
