@@ -2,7 +2,9 @@ export const profile = {
 	name: 'Pratham Kamthan',
 	handle: 'rudy128',
 	location: 'Chennai, India',
-	role: 'Full-stack software engineer',
+	role: 'AI Engineer / Systems Builder',
+	jobTitle: 'SDE-1',
+	company: 'IndieRise',
 	email: 'rudeus@rudeus.space',
 	github: 'https://github.com/rudy128',
 	linkedin: 'https://linkedin.com/in/pratham-kamthan',
@@ -27,7 +29,7 @@ export const latestOrgCommit = {
 export const projects = [
 	{
 		number: '01', title: 'Adaptive streaming',
-		description: 'Video processing, HLS playback, live viewer tracking, and realtime analytics in one full-stack platform.',
+		description: 'Video processing, HLS playback, live viewer tracking, and realtime analytics in one platform.',
 		tools: ['React', 'Express', 'FFmpeg', 'Redis'], year: '2026',
 		href: 'https://github.com/rudy128/adaptive-streaming-platform',
 		liveUrl: 'https://adaptive-streaming-platform.vercel.app',

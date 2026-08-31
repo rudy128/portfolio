@@ -5,6 +5,8 @@ export interface Profile {
 	handle: string;
 	location: string;
 	role: string;
+	jobTitle: string;
+	company: string;
 	email: string;
 	github: string;
 	linkedin: string;
