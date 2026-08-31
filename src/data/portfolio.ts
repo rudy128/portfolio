@@ -6,6 +6,22 @@ export const profile = {
 	email: 'rudeus@rudeus.space',
 	github: 'https://github.com/rudy128',
 	linkedin: 'https://linkedin.com/in/pratham-kamthan',
+	x: 'https://x.com/rud3us128',
+	xHandle: 'rud3us128',
+};
+
+export const latestXPost = {
+	id: '2094066832475136412',
+	text: 'Opus 5 the token guzzler :!',
+	publishedAt: '2026-08-30T14:16:53.000Z',
+	href: 'https://x.com/rud3us128/status/2094066832475136412',
+	image: 'https://pbs.twimg.com/media/HQ-edDBboAAT3Wn?format=webp&name=small',
+};
+
+export const latestOrgCommit = {
+	organization: 'KubeStellar',
+	organizationUrl: 'https://github.com/kubestellar',
+	organizationAvatar: 'https://avatars.githubusercontent.com/u/134407106?v=4',
 };
 
 export const projects = [

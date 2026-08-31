@@ -8,6 +8,22 @@ export interface Profile {
 	email: string;
 	github: string;
 	linkedin: string;
+	x: string;
+	xHandle: string;
+}
+
+export interface XPost {
+	id: string;
+	text: string;
+	publishedAt: string;
+	href: string;
+	image: string;
+}
+
+export interface GitHubCommit {
+	organization: string;
+	organizationUrl: string;
+	organizationAvatar: string;
 }
 
 export interface Project {

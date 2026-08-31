@@ -3,10 +3,18 @@
 	import AppContent from './AppContent.svelte';
 	import Icon from './Icon.svelte';
 	import Window from './Window.svelte';
-	import type { AppId, Profile, Project, WindowState } from './types';
+	import type { AppId, GitHubCommit, Profile, Project, WindowState, XPost } from './types';
 
 	export let profile: Profile;
 	export let projects: Project[];
+	export let latestXPost: XPost;
+	export let latestOrgCommit: GitHubCommit;
+
+	type XWindow = Window & {
+		requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number;
+		cancelIdleCallback?: (id: number) => void;
+		twttr?: { widgets?: { load: (element?: HTMLElement) => void } };
+	};
 
 	type AppDefinition = {
 		id: AppId;
@@ -33,6 +41,7 @@
 	let activeKey = 'home-1';
 	let menuOpen: 'file' | 'view' | 'window' | 'help' | null = null;
 	let clock = 'Chennai';
+	let activityWidgetElement: HTMLElement;
 	let windows: WindowState[] = [makeWindow('home', 'home-1', topZ)];
 
 	function definition(appId: AppId) {
@@ -156,13 +165,79 @@
 		clock = new Intl.DateTimeFormat('en-IN', { weekday: 'short', hour: '2-digit', minute: '2-digit' }).format(new Date());
 	}
 
+	function relativeTime(publishedAt: string) {
+		const seconds = Math.max(0, Math.floor((Date.now() - new Date(publishedAt).getTime()) / 1000));
+		if (seconds < 60) return 'just now';
+		const minutes = Math.floor(seconds / 60);
+		if (minutes < 60) return `${minutes} ${minutes === 1 ? 'minute' : 'minutes'} ago`;
+		const hours = Math.floor(minutes / 60);
+		if (hours < 24) return `${hours} ${hours === 1 ? 'hour' : 'hours'} ago`;
+		const days = Math.floor(hours / 24);
+		if (days < 30) return `${days} ${days === 1 ? 'day' : 'days'} ago`;
+		const months = Math.floor(days / 30);
+		return `${months} ${months === 1 ? 'month' : 'months'} ago`;
+	}
+
 	onMount(() => {
+		const browser = window as XWindow;
+		let observer: IntersectionObserver | undefined;
+		let idleId: number | undefined;
+		let delayId: number | undefined;
+		let widgetScript: HTMLScriptElement | null = null;
+		let handleScriptLoad: (() => void) | undefined;
+
+		const renderTimeline = () => browser.twttr?.widgets?.load(activityWidgetElement);
+		const loadTimeline = () => {
+			if (browser.twttr?.widgets) {
+				renderTimeline();
+				return;
+			}
+
+			widgetScript = document.querySelector<HTMLScriptElement>('script[data-x-widgets]');
+			handleScriptLoad = () => renderTimeline();
+			if (widgetScript) {
+				widgetScript.addEventListener('load', handleScriptLoad, { once: true });
+				return;
+			}
+
+			widgetScript = document.createElement('script');
+			widgetScript.src = 'https://platform.twitter.com/widgets.js';
+			widgetScript.async = true;
+			widgetScript.charset = 'utf-8';
+			widgetScript.dataset.xWidgets = 'true';
+			widgetScript.addEventListener('load', handleScriptLoad, { once: true });
+			document.head.append(widgetScript);
+		};
+
+		const scheduleActivity = () => {
+			if (browser.requestIdleCallback) {
+				idleId = browser.requestIdleCallback(loadTimeline, { timeout: 2500 });
+			} else {
+				delayId = window.setTimeout(loadTimeline, 1200);
+			}
+		};
+
+		if ('IntersectionObserver' in window) {
+			observer = new IntersectionObserver(([entry]) => {
+				if (!entry.isIntersecting) return;
+				observer?.disconnect();
+				scheduleActivity();
+			}, { rootMargin: '80px' });
+			observer.observe(activityWidgetElement);
+		} else {
+			scheduleActivity();
+		}
+
 		windows = windows.map(fitToViewport);
 		updateClock();
 		const timer = window.setInterval(updateClock, 30_000);
 		const handleResize = () => { windows = windows.map(fitToViewport); };
 		window.addEventListener('resize', handleResize);
 		return () => {
+			observer?.disconnect();
+			if (idleId !== undefined) browser.cancelIdleCallback?.(idleId);
+			if (delayId !== undefined) window.clearTimeout(delayId);
+			if (widgetScript && handleScriptLoad) widgetScript.removeEventListener('load', handleScriptLoad);
 			window.clearInterval(timer);
 			window.removeEventListener('resize', handleResize);
 		};
@@ -238,6 +313,37 @@
 			<div class="widget-heading"><span>NOW</span><span class="live-label"><i></i> active</span></div>
 			<p class="widget-kicker">BUILDING</p><h2>Full-stack products at IndieRise.</h2>
 			<p>Currently working across product, web systems, and research tooling.</p>
+		</section>
+		<section class="widget activity-widget" bind:this={activityWidgetElement}>
+			<div class="widget-heading"><span>RECENT ACTIVITY</span></div>
+			<div class="activity-list">
+				<div class="x-feed">
+					<a
+						class="twitter-timeline activity-row x-post-fallback"
+						href={profile.x}
+						target="_blank"
+						rel="noreferrer"
+						data-tweet-limit="1"
+						data-chrome="noheader nofooter noborders transparent noscrollbar"
+						data-dnt="true"
+						data-theme="light"
+					>
+						<img class="activity-image" src={latestXPost.image} alt="Image attached to the post" loading="lazy" decoding="async" />
+						<span class="activity-copy">
+							<strong>{latestXPost.text}</strong>
+							<span>X · @{profile.xHandle}</span>
+							<time datetime={latestXPost.publishedAt}>{relativeTime(latestXPost.publishedAt)}</time>
+						</span>
+					</a>
+				</div>
+				<a class="activity-row github-activity" href={latestOrgCommit.organizationUrl} target="_blank" rel="noreferrer">
+					<img class="activity-image" src={latestOrgCommit.organizationAvatar} alt="" loading="lazy" decoding="async" />
+					<span class="activity-copy">
+						<strong>{latestOrgCommit.organization} - OSS</strong>
+						<span>Contributed to {latestOrgCommit.organization}</span>
+					</span>
+				</a>
+			</div>
 		</section>
 		<section class="widget links-widget">
 			<div class="widget-heading"><span>QUICK LINKS</span></div>
@@ -346,6 +452,19 @@
 	.widget-kicker { margin: 0 0 0.35rem; color: #8a8171; font-size: clamp(0.72rem, calc(0.63rem + 0.13vw), 0.84rem); font-weight: 700; letter-spacing: 0.09em; }
 	.now-widget h2 { margin: 0; font-family: var(--font-sans); font-size: clamp(1.45rem, calc(1.1rem + 0.5vw), 1.9rem); font-weight: 500; line-height: 1.1; }
 	.now-widget > p:last-child { margin: 0.65rem 0 0; color: #69665f; font-size: clamp(0.88rem, calc(0.75rem + 0.15vw), 1rem); line-height: 1.5; }
+	.activity-widget { padding-bottom: clamp(0.9rem, calc(0.72rem + 0.25vw), 1.15rem); }
+	.activity-widget .widget-heading { margin-bottom: 0.7rem; }
+	.activity-list { display: grid; gap: 0.7rem; }
+	.x-feed { min-height: 3.5rem; max-height: 8.5rem; overflow: hidden; border-radius: 0.28rem; }
+	.activity-row { display: grid; grid-template-columns: 3.5rem minmax(0, 1fr); align-items: center; gap: 0.7rem; color: #24231f; text-decoration: none; }
+	.github-activity { padding-top: 0.7rem; border-top: 1px solid #d1cdc3; }
+	.activity-image { display: block; width: 3.5rem; height: 3.5rem; border: 1px solid #d1cdc3; border-radius: 0.48rem; background: #d8d5cc; object-fit: cover; }
+	.activity-copy { display: grid; min-width: 0; }
+	.activity-copy strong, .activity-copy > span { display: -webkit-box; overflow: hidden; line-height: 1.3; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+	.activity-copy strong { font-size: clamp(0.85rem, calc(0.75rem + 0.12vw), 0.96rem); font-weight: 500; }
+	.activity-copy > span { margin-top: 0.18rem; color: #716d64; font-size: clamp(0.72rem, calc(0.65rem + 0.08vw), 0.8rem); }
+	.activity-copy time { margin-top: 0.3rem; color: #837e74; font-size: clamp(0.66rem, calc(0.6rem + 0.07vw), 0.74rem); letter-spacing: 0.06em; text-transform: uppercase; }
+	.x-feed :global(iframe) { width: 100% !important; min-width: 0 !important; margin: 0 !important; }
 	.quick-links { display: grid; grid-template-columns: 1fr 1fr; gap: 0.48rem; }
 	.quick-links a, .quick-links button { display: grid; grid-template-columns: 1.2rem 1fr auto; align-items: center; gap: 0.38rem; min-width: 0; padding: clamp(0.68rem, calc(0.5rem + 0.25vw), 0.9rem) 0.55rem; border: 1px solid #d0ccc2; border-radius: 0.35rem; background: #f3f1eb; color: #272621; font: 650 clamp(0.8rem, calc(0.7rem + 0.12vw), 0.92rem) var(--font-sans); text-align: left; text-decoration: none; cursor: pointer; }
 	.quick-links :global(svg) { width: clamp(0.95rem, calc(0.8rem + 0.15vw), 1.1rem); height: clamp(0.95rem, calc(0.8rem + 0.15vw), 1.1rem); }
@@ -370,6 +489,10 @@
 	.dock-item.active::after { opacity: 1; }
 
 	@media (max-width: 1100px) { .side-rail { display: none; } }
+	@media (min-width: 1101px) and (max-height: 920px) {
+		.side-rail { bottom: 5.5rem; max-height: calc(100svh - 9rem); padding-right: 0.2rem; overflow-y: auto; scrollbar-width: none; }
+		.side-rail::-webkit-scrollbar { display: none; }
+	}
 	@media (max-width: 760px) {
 		.menu-bar { height: 2.85rem; padding: 0 0.65rem; font-size: 0.82rem; }
 		.menu-left nav, .menu-right a, .menu-right > span:not(.status-dot) { display: none; }

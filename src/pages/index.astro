@@ -1,9 +1,9 @@
 ---
 import Desktop from '../components/desktop/Desktop.svelte';
 import Layout from '../layouts/Layout.astro';
-import { profile, projects } from '../data/portfolio';
+import { latestOrgCommit, latestXPost, profile, projects } from '../data/portfolio';
 ---
 
 <Layout>
-	<Desktop client:load {profile} {projects} />
+	<Desktop client:load {profile} {projects} {latestXPost} {latestOrgCommit} />
 </Layout>
