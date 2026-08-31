@@ -411,7 +411,20 @@
 </main>
 
 <style>
-	.desktop { position: relative; height: 100svh; min-height: 100svh; overflow: hidden; background: #000 url('/world-map-wallpaper.webp') center / cover no-repeat; color: #181815; }
+	.desktop {
+		--glass-light: linear-gradient(145deg, rgb(248 246 240 / 0.82), rgb(222 218 208 / 0.7));
+		--glass-light-strong: rgb(235 232 224 / 0.72);
+		--glass-dark: linear-gradient(145deg, rgb(38 38 34 / 0.78), rgb(14 14 12 / 0.68));
+		--glass-border: rgb(255 255 255 / 0.38);
+		--glass-shadow: 0 0.8rem 2rem rgb(0 0 0 / 0.34), inset 0 1px rgb(255 255 255 / 0.42);
+		--glass-filter: blur(22px) saturate(135%);
+		position: relative;
+		height: 100svh;
+		min-height: 100svh;
+		overflow: hidden;
+		background: #000 url('/world-map-wallpaper.webp') center / cover no-repeat;
+		color: #181815;
+	}
 	.desktop::before { position: absolute; inset: 3.2rem 16.5rem 5.8rem 8.5rem; border: 1px solid rgb(255 255 255 / 0.05); background: rgb(0 0 0 / 0.1); clip-path: polygon(8% 0, 100% 0, 88% 100%, 0 82%); content: ''; }
 	.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
 
@@ -427,12 +440,12 @@
 	.status-dot { width: 0.48rem; height: 0.48rem; border-radius: 50%; background: #79a77a; box-shadow: 0 0 0 3px rgb(121 167 122 / 0.12); }
 
 	.menu-area { position: relative; }
-	.menu-popover { position: absolute; z-index: 1100; top: calc(100% + 0.1rem); left: 0; width: 16rem; padding: 0.5rem; border: 1px solid #b9b5ac; border-radius: 0.42rem; background: #efede6; color: #24231f; box-shadow: 0 0.6rem 1.5rem rgb(0 0 0 / 0.34); }
+	.menu-popover { position: absolute; z-index: 1100; top: calc(100% + 0.1rem); left: 0; width: 16rem; padding: 0.5rem; border: 1px solid var(--glass-border); border-radius: 0.58rem; background: var(--glass-light); color: #24231f; box-shadow: var(--glass-shadow); -webkit-backdrop-filter: var(--glass-filter); backdrop-filter: var(--glass-filter); }
 	.menu-popover strong, .menu-popover p, .menu-popover button { display: flex; align-items: center; justify-content: space-between; width: 100%; margin: 0; padding: 0.58rem 0.65rem; border: 0; background: none; color: inherit; font: 0.78rem var(--font-sans); text-align: left; }
 	.menu-popover strong { color: #777268; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; }
 	.menu-popover p { line-height: 1.45; }
 	.menu-popover button { cursor: pointer; }
-	.menu-popover button:hover { background: #dcd8cf; }
+	.menu-popover button:hover { background: rgb(255 255 255 / 0.34); }
 	.menu-popover button span { color: #817b70; font-size: 0.58rem; }
 	.menu-popover .danger { margin-top: 0.35rem; border-top: 1px solid #d0cbc2; color: #8b3f38; }
 
@@ -453,7 +466,7 @@
 	.sand { background: #c9b889; } .paper { background: #efeee8; } .sage { background: #87938b; } .amber { background: #b5965f; } .terminal { background: #272722; color: #e9e6db; } .trash { background: #d9d7d0; }
 
 	.side-rail { position: fixed; z-index: 4; top: 3.7rem; right: 1.2rem; display: grid; gap: 0.85rem; width: clamp(16rem, 16vw, 19rem); }
-	.widget { padding: clamp(1rem, calc(0.75rem + 0.35vw), 1.35rem); border: 1px solid rgb(0 0 0 / 0.7); border-radius: 0.65rem; background: #ece9e1; box-shadow: 0 0.4rem 1.1rem rgb(0 0 0 / 0.28); }
+	.widget { padding: clamp(1rem, calc(0.75rem + 0.35vw), 1.35rem); border: 1px solid var(--glass-border); border-radius: 0.72rem; background: var(--glass-light); box-shadow: var(--glass-shadow); -webkit-backdrop-filter: var(--glass-filter); backdrop-filter: var(--glass-filter); }
 	.widget-heading { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 0.9rem; color: #625f58; font-size: clamp(0.78rem, calc(0.65rem + 0.18vw), 0.92rem); font-weight: 800; letter-spacing: 0.08em; }
 	.live-label { display: flex; align-items: center; gap: 0.35rem; color: #5d785d; letter-spacing: 0; text-transform: lowercase; }
 	.live-label i { width: 0.45rem; height: 0.45rem; border-radius: 50%; background: #658665; }
@@ -484,12 +497,12 @@
 	.linkedin-link .quick-icon { background: #aabac3; color: #24333b; }
 	.email-link .quick-icon { background: #c7a86d; color: #332b1f; }
 	.projects-link .quick-icon { background: #859188; color: #1f2923; }
-	.system-widget { background: #1b1b18; color: #dedbd1; }
-	.system-widget .widget-heading { color: #8d8b83; }
+	.system-widget { border-color: rgb(255 255 255 / 0.16); background: var(--glass-dark); color: #dedbd1; }
+	.system-widget .widget-heading { color: #aaa79e; }
 	.system-widget dl { display: grid; gap: 0.55rem; margin: 0; font-size: clamp(0.82rem, calc(0.72rem + 0.12vw), 0.95rem); }
 	.system-widget dl div { display: flex; justify-content: space-between; gap: 1rem; }
-	.system-widget dt { color: #77766f; }
-	.system-widget dd { margin: 0; color: #c3c0b6; }
+	.system-widget dt { color: #97958d; }
+	.system-widget dd { margin: 0; color: #d2cfc5; }
 
 	.windows-layer { position: absolute; inset: 0; pointer-events: none; }
 	.windows-layer :global(.app-window) { pointer-events: auto; }

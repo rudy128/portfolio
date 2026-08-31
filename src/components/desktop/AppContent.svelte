@@ -163,7 +163,7 @@
 	.contact-card strong { font-weight: 600; }
 	.contact-card i { font-style: normal; }
 
-	.terminal-app { min-height: 100%; padding: 1.35rem; background: #171714; color: #c8c4b7; font: 0.76rem/1.7 ui-monospace, SFMono-Regular, Menlo, monospace; }
+	.terminal-app { min-height: 100%; padding: 1.35rem; background: rgb(16 16 14 / 0.78); color: #c8c4b7; font: 0.76rem/1.7 ui-monospace, SFMono-Regular, Menlo, monospace; }
 	.terminal-app p { margin: 0.12rem 0; }
 	.terminal-app span { color: #90ad87; }
 	.terminal-app a { color: #d5bd82; }

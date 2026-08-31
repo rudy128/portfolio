@@ -99,10 +99,12 @@
 		min-width: 27.5rem;
 		min-height: 18.75rem;
 		overflow: hidden;
-		border: 1px solid #22211d;
+		border: 1px solid var(--glass-border, rgb(255 255 255 / 0.38));
 		border-radius: 0.72rem;
-		background: #f1eee6;
-		box-shadow: 0 1rem 2.8rem rgb(0 0 0 / 0.42);
+		background: var(--glass-light, rgb(235 232 224 / 0.78));
+		box-shadow: var(--glass-shadow, 0 1rem 2.8rem rgb(0 0 0 / 0.42));
+		-webkit-backdrop-filter: var(--glass-filter, blur(22px) saturate(135%));
+		backdrop-filter: var(--glass-filter, blur(22px) saturate(135%));
 		color: #1c1b17;
 		transition: box-shadow 120ms ease, opacity 140ms ease, transform 140ms ease;
 	}
@@ -131,8 +133,9 @@
 		align-items: center;
 		height: 2.65rem;
 		padding: 0 0.78rem;
-		border-bottom: 1px solid #d0cbc1;
-		background: #e5e1d8;
+		border-bottom: 1px solid rgb(94 90 82 / 0.24);
+		background: var(--glass-light-strong, rgb(235 232 224 / 0.72));
+		box-shadow: inset 0 1px rgb(255 255 255 / 0.42);
 		cursor: grab;
 		user-select: none;
 		touch-action: none;
