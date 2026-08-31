@@ -133,9 +133,10 @@
 		align-items: center;
 		height: 2.65rem;
 		padding: 0 0.78rem;
-		border-bottom: 1px solid rgb(94 90 82 / 0.24);
-		background: var(--glass-light-strong, rgb(235 232 224 / 0.72));
-		box-shadow: inset 0 1px rgb(255 255 255 / 0.42);
+		border-bottom: 1px solid rgb(255 255 255 / 0.08);
+		background: var(--chrome-color, #0d0d0b);
+		box-shadow: inset 0 -1px rgb(255 255 255 / 0.08);
+		color: #efede6;
 		cursor: grab;
 		user-select: none;
 		touch-action: none;
@@ -148,7 +149,7 @@
 	.close { background: #c95d4f; }
 	.minimize { background: #d2a84c; }
 	.maximize { background: #6a9863; }
-	.window-menu { justify-self: end; padding: 0.2rem; border: 0; background: none; color: #77736a; cursor: pointer; }
+	.window-menu { justify-self: end; padding: 0.2rem; border: 0; background: none; color: #aaa79e; cursor: pointer; }
 	.window-body { height: calc(100% - 2.65rem); overflow: auto; overscroll-behavior: contain; }
 
 	.resize-handle {
