@@ -1,23 +1,41 @@
+---
+interface Props { title?: string; description?: string; }
+const {
+	title = 'Pratham Kamthan | Full-stack software engineer',
+	description = 'The portfolio of Pratham Kamthan, a full-stack software engineer in Chennai.',
+} = Astro.props;
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content={description} />
+		<meta name="theme-color" content="#000000" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:type" content="website" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>{title}</title>
 	</head>
 	<body>
+		<a class="skip-link" href="#app-window">Skip to portfolio</a>
 		<slot />
 	</body>
 </html>
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+<style is:global>
+	:root { --font-sans: Arial, Helvetica, sans-serif; font-family: var(--font-sans); font-synthesis: none; text-rendering: optimizeLegibility; color-scheme: dark; }
+	* { box-sizing: border-box; }
+	html, body { margin: 0; min-width: 320px; min-height: 100%; overflow: hidden; }
+	button, input, textarea, select { font: inherit; }
+	button, a { -webkit-tap-highlight-color: transparent; }
+	button { border-radius: 0; }
+	::selection { color: #f1eee6; background: #33332d; }
+	.skip-link { position: fixed; z-index: 200; top: 0.5rem; left: 0.5rem; padding: 0.6rem 0.8rem; background: #f1eee6; color: #181815; font-size: 0.75rem; transform: translateY(-160%); }
+	.skip-link:focus { transform: none; }
+	:focus-visible { outline: 2px solid #8eae88; outline-offset: 2px; }
+	@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; } }
 </style>
